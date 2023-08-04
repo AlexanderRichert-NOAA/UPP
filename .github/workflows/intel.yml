@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: checkout-upp  # This is for getting spack.yaml
         if: steps.cache-env.outputs.cache-hit != 'true'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
             path: UPP
 
@@ -60,12 +60,13 @@ jobs:
           echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
           sudo apt-get update
           sudo apt-get install intel-oneapi-dev-utilities intel-oneapi-mpi-devel intel-oneapi-openmp intel-oneapi-compiler-fortran intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic
-          echo "source /opt/intel/oneapi/setvars.sh" >> ~/.bash_profile
+          echo "source /opt/intel/oneapi/setvars.sh" > ~/.bash_profile
 
       # Install dependencies using Spack
       - name: install-dependencies-with-spack
         if: steps.cache-env.outputs.cache-hit != 'true'
         run: |
+          mv /usr/local /usr/local_mv
           git clone -c feature.manyFiles=true https://github.com/NOAA-EMC/spack.git
           source spack/share/spack/setup-env.sh
           spack env create upp-env UPP/ci/spack.yaml
@@ -75,7 +76,7 @@ jobs:
           spack external find
           spack add intel-oneapi-mpi
           spack concretize
-          spack install --dirty -v --fail-fast
+          spack install --fail-fast
           spack clean --all
 
   build:
@@ -84,13 +85,13 @@ jobs:
 
     steps:
       - name: checkout-upp
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
             path: UPP
 
       - name: install-intel
         run: |
-          echo "source /opt/intel/oneapi/setvars.sh" >> ~/.bash_profile
+          echo "source /opt/intel/oneapi/setvars.sh" > ~/.bash_profile
 
       - name: cache-env
         id: cache-env
