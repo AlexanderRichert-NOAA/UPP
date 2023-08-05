@@ -76,7 +76,8 @@ jobs:
           spack external find
           spack add intel-oneapi-mpi
           intel_libdir=/opt/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin
-          sed -i "s|extra_rpaths: \[\]|extra_rpaths: \[$intel_libdir\]|" $SPACK_ENV/spack.yaml
+          sed -i "s|extra_rpaths:.*|extra_rpaths: \[$intel_libdir\]|" $SPACK_ENV/spack.yaml
+          cat $SPACK_ENV/spack.yaml
           spack concretize
           spack install --fail-fast --show-log-on-error
           spack clean --all
