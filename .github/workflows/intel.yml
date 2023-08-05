@@ -9,7 +9,7 @@ defaults:
 
 # Set I_MPI_CC/F90 so Intel MPI wrapper uses icc/ifort instead of gcc/gfortran
 env:
-  cache_key: intel3  # The number (#) following the cache_key "intel" is to flush Action cache.
+  cache_key: intel4  # The number (#) following the cache_key "intel" is to flush Action cache.
   CC: icc
   FC: ifort
   CXX: icpc
@@ -76,7 +76,7 @@ jobs:
           spack external find
           spack add intel-oneapi-mpi
           intel_libdir=/opt/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin
-          sed -i "s|extra_rpaths: []|extra_rpaths: [$intel_libdir]|"
+          sed -i "s|extra_rpaths: []|extra_rpaths: [$intel_libdir]|" $SPACK_ENV/spack.yaml
           spack concretize
           spack install --fail-fast --show-log-on-error
           spack clean --all
