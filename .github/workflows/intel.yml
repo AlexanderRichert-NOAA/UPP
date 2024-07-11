@@ -9,7 +9,7 @@ defaults:
 
 # Set I_MPI_CC/F90 so Intel MPI wrapper uses icc/ifort instead of gcc/gfortran
 env:
-  cache_key: intel3  # The number (#) following the cache_key "intel" is to flush Action cache.
+  cache_key: intel4  # The number (#) following the cache_key "intel" is to flush Action cache.
   CC: icc
   FC: ifort
   CXX: icpc
@@ -24,6 +24,11 @@ env:
 # There is a Github issue to force clear the cache.
 # See discussion on:
 # https://stackoverflow.com/questions/63521430/clear-cache-in-github-actions
+
+# Cancel in-progress workflows when pushing to a branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 # The jobs are split into:
 # 1. a dependency build step (setup), and
@@ -100,7 +105,7 @@ jobs:
             spack
             ~/.spack
             /opt/intel
-          key: intel-spack-${{ runner.os }}-${{ env.cache_key }}-${{ hashFiles('UPP/ci/spack.yaml') }}
+          key: spack-${{ runner.os }}-${{ env.cache_key }}-${{ hashFiles('UPP/ci/spack.yaml') }}
 
       - name: build-upp
         run: |

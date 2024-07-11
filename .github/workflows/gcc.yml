@@ -23,12 +23,16 @@ env:
 # See discussion on:
 # https://stackoverflow.com/questions/63521430/clear-cache-in-github-actions
 
+# Cancel in-progress workflows when pushing to a branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 # The jobs are split into:
 # 1. a dependency build step (setup), and
 # 2. a UPP build step (build)
 # The setup is run once and the environment is cached,
 # so each build of UPP can reuse the cached dependencies to save time (and compute).
-
 jobs:
   setup:
     runs-on: ubuntu-latest
