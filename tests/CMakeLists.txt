@@ -7,6 +7,7 @@
 function(create_test name)
   add_executable(${name} ${name}.F90)
   add_test(NAME ${name} COMMAND ${name})
+  target_link_libraries(${name} PRIVATE upp)  
 endfunction()
 
 create_test(t1)
