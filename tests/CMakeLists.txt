@@ -11,4 +11,5 @@ function(create_test name)
 endfunction()
 
 create_test(t1)
+create_test(t2)
 

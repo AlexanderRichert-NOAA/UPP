@@ -1,4 +1,4 @@
-program t1
+program t2
   use grib2_module
   implicit none
   
@@ -34,4 +34,4 @@ program t1
   call grib_info_finalize()
   
   print *, 'SUCCESS!'
-end program t1
+end program t2
