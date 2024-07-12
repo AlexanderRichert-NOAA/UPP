@@ -11,9 +11,10 @@ program t1
 
   call grib_info_init()
 
+  len3 = 19
   call g2sec3tmpl40(nx,nY,lat1,lon1,lat2,lon2,lad,ds1,len3,igds,ifield3)
 
-  !call getgds(ldfgrd, len3, ifield3len, igds, ifield3)
+  call getgds(ldfgrd, len3, ifield3len, igds, ifield3)
   
   call grib_info_finalize()
   
