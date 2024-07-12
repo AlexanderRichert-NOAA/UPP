@@ -10,12 +10,13 @@ program t1
   print *, 'testing grib2_module...'
 
   call grib_info_init()
-
-  len3 = 19
-  call g2sec3tmpl40(nx,nY,lat1,lon1,lat2,lon2,lad,ds1,len3,igds,ifield3)
+  print *, pset
 
   call getgds(ldfgrd, len3, ifield3len, igds, ifield3)
   
+  len3 = 19
+  call g2sec3tmpl40(nx,nY,lat1,lon1,lat2,lon2,lad,ds1,len3,igds,ifield3)
+
   call grib_info_finalize()
   
   print *, 'SUCCESS!'
