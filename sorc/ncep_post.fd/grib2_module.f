@@ -96,7 +96,8 @@
   character*255 fl_nametbl,fl_gdss3
   logical :: first_grbtbl !< _____?
 !
-  public num_pset,pset,nrecout,gribit2,grib_info_init,first_grbtbl,grib_info_finalize,read_grib2_head,read_grib2_sngle
+      public num_pset,pset,nrecout,gribit2,grib_info_init,first_grbtbl,grib_info_finalize,read_grib2_head,read_grib2_sngle, &
+      g2sec3tmpl40
   real(8), EXTERNAL :: timef
 !-------------------------------------------------------------------------------------
 !
