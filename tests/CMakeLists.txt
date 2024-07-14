@@ -5,7 +5,9 @@
 
 # Include cmake functions for MPI.
 include(LibMPI)
-set(DEFAULT_TEST_TIMEOUT 600)
+
+# Set timeout for MPI runs in seconds.
+set(DEFAULT_TEST_TIMEOUT 60)
 
 # This function builds, links, and runs a test program.
 function(create_test name)
@@ -14,19 +16,24 @@ function(create_test name)
   target_link_libraries(${name} PRIVATE upp)  
 endfunction()
 
-# This function builds, links, and runs a test program.
-function(create_mpi_test name)
-  add_executable(${name} ${name}.F90)
-  target_link_libraries(${name} PRIVATE upp)  
-  add_mpi_test(${name}
-    EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/${name}
-    NUMPROCS 4
+# This function builds, links, and runs an MPI test program. The
+# arguments are name of test and number of procs to run it on.
+function(create_mpi_test name num_procs)
+  add_executable(${name}_${num_procs} ${name}.F90)
+  target_link_libraries(${name}_${num_procs} PRIVATE upp)  
+  add_mpi_test(${name}_${num_procs}_procs
+    EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/${name}_${num_procs}
+    NUMPROCS ${num_procs}
     TIMEOUT ${DEFAULT_TEST_TIMEOUT})
 endfunction()
 
+# This test is run without MPI.
 create_test(t1)
-create_mpi_test(t2)
-create_mpi_test(t3)
+
+# These tests are run with MPI.
+create_mpi_test(t2 4)
+create_mpi_test(t3 1)
+create_mpi_test(t3 4)
 
 
 

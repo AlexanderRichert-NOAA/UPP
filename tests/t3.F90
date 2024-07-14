@@ -26,7 +26,7 @@ program t3
   if (me .eq. 0) then
      print *, 'testing grib2_module, num_procs is', num_procs
   endif
-  if (num_procs .ne. 4) stop 3
+  !if (num_procs .ne. 4) stop 3
 
   call grib_info_init()
   if (trim(pset%sub_center) .ne. 'ncep_emc') stop 10
