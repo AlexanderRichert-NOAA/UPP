@@ -26,6 +26,7 @@ endfunction()
 
 create_test(t1)
 create_mpi_test(t2)
+create_mpi_test(t3)
 
 
 

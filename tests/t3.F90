@@ -1,5 +1,8 @@
-program t2
+program t3
   use grib2_module
+  use ctlblk_mod, only : im,jm,im_jm,num_procs,me,ista,iend,jsta,jend,ifhr,sdat,ihrst,imin,    &
+       mpi_comm_comp,ntlfld,fld_info,datapd,icnt,idsp
+  
   implicit none
   include 'mpif.h'
   
@@ -14,39 +17,28 @@ program t2
   integer lat1,lon1,lat2,lon2,lad,ds1
   integer :: i
   character(255) :: post_fname = 't1_post_fname'
-  integer :: my_rank, ntasks, ierr, inumq, mpi_comm_comp, mpi_comm_inter
+  integer :: my_rank, ntasks, ierr, num_servers, mpi_comm_inter
   
 
   ! Set up MPI.
-  call MPI_Init(ierr)
-  call MPI_Comm_rank(MPI_COMM_WORLD, my_rank, ierr)
-  call MPI_Comm_size(MPI_COMM_WORLD, ntasks, ierr)
+  call setup_servers(me, num_procs, num_servers, mpi_comm_comp, mpi_comm_inter)
 
-  if (my_rank .eq. 0) then
-     print *, 'testing grib2_module, ntasks is', ntasks
+  if (me .eq. 0) then
+     print *, 'testing grib2_module, num_procs is', num_procs
   endif
-  if (ntasks .ne. 4) stop 3
+  if (num_procs .ne. 4) stop 3
 
   call grib_info_init()
   if (trim(pset%sub_center) .ne. 'ncep_emc') stop 10
   !print *, pset
 
-  len3 = 19
-  call getgds(ldfgrd, len3, ifield3len, igds, ifield3)
-  do i = 1, 19
-     if (ifield3(i) .ne. expected_ifield3(i)) stop 20
-  end do
-  
-  call g2sec3tmpl40(nx,nY,lat1,lon1,lat2,lon2,lad,ds1,len3,igds,ifield3)
-  do i = 1, 19
-     if (ifield3(i) .ne. expected_ifield3_2(i)) stop 20
-  end do
+  call gribit2(post_fname)
 
   call grib_info_finalize()
 
   ! We're done!
   call MPI_Finalize(ierr)
-  if (my_rank .eq. 0) then
+  if (me .eq. 0) then
      print *, '*** SUCCESS!'
   endif  
-end program t2
+end program t3
