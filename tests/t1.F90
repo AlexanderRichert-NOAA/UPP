@@ -7,12 +7,10 @@ program t1
   integer(4) :: expected_ifield3(19) = (/ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 0 /)
   integer(4) :: expected_ifield3_2(19) = (/ 6, 0, 0, 0, 0, 0, 0, 1152, 576, 0, 0, 89761000, 0, &
        48, -89761000, 359687000, 313000, 288, 0 /)
-  
   logical ldfgrd  
   integer :: nx,ny
   integer lat1,lon1,lat2,lon2,lad,ds1
   integer :: i
-  character(255) :: post_fname = 't1_post_fname'
 
   print *, 'testing grib2_module...'
 

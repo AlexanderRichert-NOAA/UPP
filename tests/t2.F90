@@ -13,9 +13,7 @@ program t2
   integer :: nx,ny
   integer lat1,lon1,lat2,lon2,lad,ds1
   integer :: i
-  character(255) :: post_fname = 't1_post_fname'
-  integer :: my_rank, ntasks, ierr, inumq, mpi_comm_comp, mpi_comm_inter
-  
+  integer :: my_rank, ntasks, ierr
 
   ! Set up MPI.
   call MPI_Init(ierr)
