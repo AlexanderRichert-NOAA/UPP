@@ -1,6 +1,7 @@
 program t2
   use grib2_module
   implicit none
+  include 'mpif.h'
   
   integer(4) :: len3, ifield3len
   integer(4) :: ifield3(19),igds(5)
@@ -13,8 +14,17 @@ program t2
   integer lat1,lon1,lat2,lon2,lad,ds1
   integer :: i
   character(255) :: post_fname = 't1_post_fname'
+  integer :: my_rank, ntasks, ierr
 
-  print *, 'testing grib2_module...'
+  ! Set up MPI.
+  call MPI_Init(ierr)
+  call MPI_Comm_rank(MPI_COMM_WORLD, my_rank, ierr)
+  call MPI_Comm_size(MPI_COMM_WORLD, ntasks, ierr)
+
+  if (my_rank .eq. 0) then
+     print *, 'testing grib2_module, ntasks is', ntasks
+  endif
+  if (ntasks .ne. 4) stop 3
 
   call grib_info_init()
   if (trim(pset%sub_center) .ne. 'ncep_emc') stop 10
@@ -32,6 +42,10 @@ program t2
   end do
 
   call grib_info_finalize()
-  
-  print *, 'SUCCESS!'
+
+  ! We're done!
+  call MPI_Finalize(ierr)
+  if (my_rank .eq. 0) then
+     print *, '*** SUCCESS!'
+  endif  
 end program t2
