@@ -14,12 +14,15 @@ program t2
   integer lat1,lon1,lat2,lon2,lad,ds1
   integer :: i
   character(255) :: post_fname = 't1_post_fname'
-  integer :: my_rank, ntasks, ierr
+  integer :: my_rank, ntasks, ierr, inumq, mpi_comm_comp, mpi_comm_inter
+  
 
   ! Set up MPI.
-  call MPI_Init(ierr)
-  call MPI_Comm_rank(MPI_COMM_WORLD, my_rank, ierr)
-  call MPI_Comm_size(MPI_COMM_WORLD, ntasks, ierr)
+  ! call MPI_Init(ierr)
+  ! call MPI_Comm_rank(MPI_COMM_WORLD, my_rank, ierr)
+  ! call MPI_Comm_size(MPI_COMM_WORLD, ntasks, ierr)
+  call setup_servers(my_rank, ntasks, inumq, mpi_comm_comp, mpi_comm_inter)
+
 
   if (my_rank .eq. 0) then
      print *, 'testing grib2_module, ntasks is', ntasks
