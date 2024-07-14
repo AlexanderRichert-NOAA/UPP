@@ -1,23 +1,13 @@
 program t3
   use grib2_module
-  use ctlblk_mod, only : im,jm,im_jm,num_procs,me,ista,iend,jsta,jend,ifhr,sdat,ihrst,imin,    &
-       mpi_comm_comp,ntlfld,fld_info,datapd,icnt,idsp
-  
+  use ctlblk_mod
+  ! use ctlblk_mod, only : im,jm,im_jm,num_procs,me,ista,iend,jsta,jend,ifhr,sdat,ihrst,imin,    &
+  !      mpi_comm_comp,ntlfld,fld_info,datapd,icnt,idsp
   implicit none
   include 'mpif.h'
   
-  integer(4) :: len3, ifield3len
-  integer(4) :: ifield3(19),igds(5)
-  integer(4) :: expected_ifield3(19) = (/ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 0 /)
-  integer(4) :: expected_ifield3_2(19) = (/ 6, 0, 0, 0, 0, 0, 0, 1152, 576, 0, 0, 89761000, 0, &
-       48, -89761000, 359687000, 313000, 288, 0 /)
-  
-  logical ldfgrd  
-  integer :: nx,ny
-  integer lat1,lon1,lat2,lon2,lad,ds1
-  integer :: i
   character(255) :: post_fname = 't1_post_fname'
-  integer :: my_rank, ntasks, ierr, num_servers, mpi_comm_inter
+  integer :: ierr
   
 
   ! Set up MPI.
