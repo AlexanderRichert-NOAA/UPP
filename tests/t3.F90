@@ -14,9 +14,11 @@ program t3
   call setup_servers(me, num_procs, num_servers, mpi_comm_comp, mpi_comm_inter)
 
   if (me .eq. 0) then
-     print *, 'testing grib2_module, num_procs is', num_procs
+     print *, 'testing gribit2(), num_procs is', num_procs
   endif
-  !if (num_procs .ne. 4) stop 3
+
+  ! This tests must be run on 1 or 4 procs.
+  if (num_procs .ne. 4 .and. num_procs .ne. 1) stop 3
 
   call grib_info_init()
   if (trim(pset%sub_center) .ne. 'ncep_emc') stop 10
