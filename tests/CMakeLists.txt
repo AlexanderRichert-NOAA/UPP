@@ -9,6 +9,15 @@ include(LibMPI)
 # Set timeout for MPI runs in seconds.
 set(DEFAULT_TEST_TIMEOUT 60)
 
+# Some very small test files may be committed to the repo. This
+# function copies such a data file to the build directory.
+function(copy_test_data name)
+  message(STATUS "Copying test file ${name}")
+  file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/data/${name}"
+    DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/data"
+    FILE_PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+endfunction()
+
 # This function builds, links, and runs a test program.
 function(create_test name)
   add_executable(${name} ${name}.F90)
@@ -26,6 +35,9 @@ function(create_mpi_test name num_procs)
     NUMPROCS ${num_procs}
     TIMEOUT ${DEFAULT_TEST_TIMEOUT})
 endfunction()
+
+# Copy test data files to build directory.
+copy_test_data(tocgrib2.nml)
 
 # This test is run without MPI.
 create_test(t1)
