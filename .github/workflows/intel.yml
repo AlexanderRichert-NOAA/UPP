@@ -102,6 +102,7 @@ jobs:
         run: |
           source spack/share/spack/setup-env.sh
           spack env activate upp-env
+          spack config add "packages:all:prefer:['%intel']"
           export CC=mpiicc
           export FC=mpiifort
           cd UPP
