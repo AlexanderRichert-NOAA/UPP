@@ -100,3 +100,5 @@ jobs:
           make -j2 VERBOSE=1
           ctest --rerun-failed --output-on-failure
           make install
+          cd tests
+          ls -l t1_post_fname
