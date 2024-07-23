@@ -36,7 +36,13 @@ function(create_mpi_test name num_procs)
     TIMEOUT ${DEFAULT_TEST_TIMEOUT})
 endfunction()
 
-# Copy test data files to build directory.
+# Copye params_grib2_tbl_new to test dir.
+message(STATUS "Copying test file ${name}")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/data/params_grib2_tbl_new"
+  DESTINATION "${CMAKE_CURRENT_BINARY_DIR}"
+  FILE_PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+
+  # Copy test data files to build directory.
 copy_test_data(tocgrib2.nml)
 
 # This test is run without MPI.

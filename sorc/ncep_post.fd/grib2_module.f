@@ -175,6 +175,7 @@
         print*, 'Couldnt open table file - return code was ',ierr
         call mpi_abort()
       endif
+      print *, 'Opened table file'
       first_grbtbl=.false.
     endif
 !
@@ -310,14 +311,15 @@
            else
              itblinfo=0
            endif
-!           print *,'i=',i,'nprm=',fld_info(i)%ifld,'pname=',trim(pset%param(nprm)%pname), &
-!            'lev_type=',trim(pset%param(nprm)%fixed_sfc1_type),'itblinfo=',itblinfo,      &
-!            'nlvl=',nlvl,'lvl1=',fldlvl1,'lvl2=',fldlvl2, &
-!            'shortname=',trim(pset%param(nprm)%shortname)
+           print *,'i=',i,'nprm=',fld_info(i)%ifld,'pname=',trim(pset%param(nprm)%pname), &
+            'lev_type=',trim(pset%param(nprm)%fixed_sfc1_type),'itblinfo=',itblinfo,      &
+            'nlvl=',nlvl,'lvl1=',fldlvl1,'lvl2=',fldlvl2, &
+            'shortname=',trim(pset%param(nprm)%shortname)
            call search_for_4dot2_entry(                                &
                 pset%param(nprm)%pname,                 &
                 itblinfo,                               &
                 idisc, icatg, iparm, ierr)
+           print *, 'ierr = ', ierr
            if(ierr==0) then
              write(6,'(3(A,I4),A,A)') '  discipline ',idisc,           &
                                       '  category ',icatg,             &
@@ -691,9 +693,9 @@
 !
        coordlist=0
        numcoord=0
-!       print *,'size(level)=',size(pset%param(nprm)%level),'nlvl=',nlvl, &
-!       'lev_type=',trim(pset%param(nprm)%fixed_sfc1_type),'fldlvl1=', &
-!        fldlvl1,'fldlvl2=',fldlvl2
+       print *,'size(level)=',size(pset%param(nprm)%level),'nlvl=',nlvl, &
+       'lev_type=',trim(pset%param(nprm)%fixed_sfc1_type),'fldlvl1=', &
+       fldlvl1,'fldlvl2=',fldlvl2
 !lvl is shown in ctl file
        if(fldlvl1==0.and.fldlvl2==0) then
    
