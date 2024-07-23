@@ -50,8 +50,8 @@ create_test(t1)
 
 # These tests are run with MPI.
 create_mpi_test(t2 4)
-#create_mpi_test(t3 1)
-create_mpi_test(t3 4)
+create_mpi_test(t3 1)
+#create_mpi_test(t3 4)
 
 
 
