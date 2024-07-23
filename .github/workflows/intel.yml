@@ -108,5 +108,5 @@ jobs:
           cd UPP
           mkdir -p build && cd build
           cmake -DCMAKE_INSTALL_PREFIX=../install ..
-          make -j2 VERBOSE=1
+          make VERBOSE=1
           make install

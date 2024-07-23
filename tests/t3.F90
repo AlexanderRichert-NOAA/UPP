@@ -60,6 +60,7 @@ program t3
   allocate(paramset(paramset_count)%param(param_count))  
   allocate(paramset(paramset_count)%param(param_count)%scale_fact_fixed_sfc1(nlvl))  
   allocate(paramset(paramset_count)%param(param_count)%scale_fact_fixed_sfc2(nlvl))  
+  allocate(paramset(paramset_count)%param(param_count)%scale(1))  
   pset   = paramset(1)
   paramset(1)%param(1)%pname = 'TMP'
   call gribit2(post_fname)
