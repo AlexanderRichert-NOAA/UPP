@@ -9,6 +9,7 @@ program t3
   
   character(255) :: post_fname = 't1_post_fname'
   integer :: param_count, paramset_count
+  integer :: check_test_file
   integer :: i, j, k, ierr, nlvl
 
   ! Set up MPI.
@@ -68,9 +69,40 @@ program t3
 
   call grib_info_finalize()
 
+  ! Now open the file and check it.
+  ierr = check_test_file(post_fname)
+  if (ierr .ne. 0) stop 100
+
   ! We're done!
   call MPI_Finalize(ierr)
   if (me .eq. 0) then
      print *, '*** SUCCESS!'
   endif  
 end program t3
+
+! Check the test file for correctness.
+integer function check_test_file(file_name)
+  use bacio_module
+  implicit none
+  
+  character(255), intent(in) :: file_name
+  integer*8 :: iseek8, mseek8, lskip8, lgrib8   
+  integer :: lugb, iret
+
+  ! Open the test file.
+  call baopenr(lugb, file_name, iret)
+  if (iret .ne. 0) stop 10
+
+  iseek8 = 0
+  mseek8 = 100
+  call skgb(lugb, iseek8, mseek8, lskip8, lgrib8)  
+  print *, 'lskip8', lskip8, 'lgrib8', lgrib8
+ 
+
+  ! Close the test file.
+  call baclose(lugb, iret)
+  if (iret .ne. 0) stop 51
+  
+  check_test_file = 0
+  
+end function check_test_file

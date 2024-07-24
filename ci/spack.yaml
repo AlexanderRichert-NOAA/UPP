@@ -10,7 +10,7 @@ spack:
   - netcdf-fortran@4.6.1
   - bacio@2.4.1
   - w3emc@2.10.0
-  - g2@3.4.5
+  - g2@develop
   - g2tmpl@develop
   - sp@2.5.0
   - ip@4.3.0

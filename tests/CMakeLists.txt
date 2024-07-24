@@ -29,7 +29,7 @@ endfunction()
 # arguments are name of test and number of procs to run it on.
 function(create_mpi_test name num_procs)
   add_executable(${name}_${num_procs} ${name}.F90)
-  target_link_libraries(${name}_${num_procs} PRIVATE upp)  
+  target_link_libraries(${name}_${num_procs} PRIVATE upp PRIVATE g2::g2_4)  
   add_mpi_test(${name}_${num_procs}_procs
     EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/${name}_${num_procs}
     NUMPROCS ${num_procs}
