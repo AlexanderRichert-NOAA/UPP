@@ -90,14 +90,15 @@ integer function check_test_file(file_name)
   integer :: lugb, iret
 
   ! Open the test file.
-  call baopenr(lugb, file_name, iret)
+  lugb = 11
+  call baopenr(lugb, trim(file_name), iret)
   if (iret .ne. 0) stop 10
 
   iseek8 = 0
   mseek8 = 100
-  call skgb(lugb, iseek8, mseek8, lskip8, lgrib8)  
-  print *, 'lskip8', lskip8, 'lgrib8', lgrib8
- 
+  call skgb8(lugb, iseek8, mseek8, lskip8, lgrib8)  
+  !print *, 'lskip8', lskip8, 'lgrib8', lgrib8
+  if (lskip8 .ne. 0 .or. lgrib8 .ne. 192) stop 200
 
   ! Close the test file.
   call baclose(lugb, iret)
