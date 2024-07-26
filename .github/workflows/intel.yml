@@ -84,13 +84,6 @@ jobs:
           spack concretize
           spack install --dirty --fail-fast
 
-      - name: upload-artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          path: |
-            /home/runner/work/UPP/UPP/spack/opt/spack/linux-ubuntu20.04-zen2/gcc-10.5.0/intel-oneapi-mpi-2021.12.1-*/mpi/2021.12/include/mpi/mpi.mod
-            /tmp/runner/spack-stage/spack-stage-nemsio-2.5.4-*/spack-build-out.txt
-
   build:
     needs: setup
     runs-on: ubuntu-20.04
