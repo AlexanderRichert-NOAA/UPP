@@ -48,6 +48,7 @@ jobs:
           install-oneapi: false
           install-mpi: true
           mpi-version: 2021.10.0
+          cache: false
 
       - name: checkout-upp  # This is for getting spack.yaml
         if: steps.cache-env.outputs.cache-hit != 'true'
@@ -63,6 +64,7 @@ jobs:
           path: |
             /dev/shm/spack
             ~/.spack
+            /opt/intel
           key: spack-${{ runner.os }}-${{ env.cache_key }}-${{ hashFiles('UPP/ci/spack.yaml') }}
 
       # Install dependencies using Spack
@@ -104,6 +106,7 @@ jobs:
           path: |
             /dev/shm/spack
             ~/.spack
+            /opt/intel
           key: spack-${{ runner.os }}-${{ env.cache_key }}-${{ hashFiles('UPP/ci/spack.yaml') }}
 
       - name: build-upp
