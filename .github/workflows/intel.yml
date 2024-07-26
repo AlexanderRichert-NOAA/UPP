@@ -73,7 +73,7 @@ jobs:
           cd /dev/shm
           git clone -c feature.manyFiles=true https://github.com/NOAA-EMC/spack.git
           source spack/share/spack/setup-env.sh
-          spack env create upp-env UPP/ci/spack.yaml
+          spack env create upp-env $GITHUB_WORKSPACE/UPP/ci/spack.yaml
           spack env activate upp-env
           spack compiler find
           sudo apt install cmake
