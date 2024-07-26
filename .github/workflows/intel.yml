@@ -71,8 +71,13 @@ jobs:
           spack external find
           spack add intel-oneapi-mpi
           spack concretize
-          spack install --dirty --fail-fast
-          spack clean --all
+          spack install --dirty --fail-fast hdf5
+
+      - name: upload-artifacts
+        use: actions/upload-artifact@v4
+        path: |
+          /home/runner/work/UPP/UPP/spack/opt/spack/linux-ubuntu20.04-zen2/gcc-10.5.0/intel-oneapi-mpi-2021.12.1-*/mpi/2021.12/include/mpi/mpi.mod
+          /tmp/runner/spack-stage/spack-stage-nemsio-2.5.4-*/spack-build-out.txt
 
   build:
     needs: setup
