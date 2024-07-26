@@ -46,7 +46,6 @@ jobs:
         uses: NOAA-EMC/ci-install-intel-toolkit@develop
         with:
           install-oneapi: false
-          install-mpi: true
 
       - name: checkout-upp  # This is for getting spack.yaml
         if: steps.cache-env.outputs.cache-hit != 'true'
@@ -78,9 +77,8 @@ jobs:
           spack external find
           spack config add "packages:all:prefer:'%intel'"
           spack config add "packages:mpi:require:intel-oneapi-mpi"
-          spack config add "packages:mpi:buildable:false"
           spack concretize
-          spack install --dirty --fail-fast hdf5
+          spack install --dirty --fail-fast
 
       - name: upload-artifacts
         uses: actions/upload-artifact@v4
