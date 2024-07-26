@@ -43,7 +43,7 @@ jobs:
     steps:
 
       - name: install-intel-compilers
-        uses: NOAA-EMC/ci-install-intel-toolkit
+        uses: NOAA-EMC/ci-install-intel-toolkit@develop
         with:
           install-oneapi: false
           install-mpi: true
