@@ -46,6 +46,8 @@ jobs:
         uses: NOAA-EMC/ci-install-intel-toolkit@develop
         with:
           install-oneapi: false
+          install-mpi: true
+          mpi-version: 2021.10.0
 
       - name: checkout-upp  # This is for getting spack.yaml
         if: steps.cache-env.outputs.cache-hit != 'true'
@@ -59,7 +61,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            spack
+            /dev/shm/spack
             ~/.spack
             /opt/intel
           key: spack-${{ runner.os }}-${{ env.cache_key }}-${{ hashFiles('UPP/ci/spack.yaml') }}
@@ -68,6 +70,7 @@ jobs:
       - name: install-dependencies-with-spack
         if: steps.cache-env.outputs.cache-hit != 'true'
         run: |
+          cd /dev/shm
           git clone -c feature.manyFiles=true https://github.com/NOAA-EMC/spack.git
           source spack/share/spack/setup-env.sh
           spack env create upp-env UPP/ci/spack.yaml
@@ -77,6 +80,8 @@ jobs:
           spack external find
           spack config add "packages:all:prefer:'%intel'"
           spack config add "packages:mpi:require:intel-oneapi-mpi"
+          spack config add "packages:mpi:buildable:false"
+          echo -e "packages:\n  intel-oneapi-mpi:\n    externals:\n    - spec: intel-oneapi-mpi@2021.10.0\n      prefix: /opt/intel/oneapi/" >> $SPACK_ENV/spack.yaml
           spack concretize
           spack install --dirty --fail-fast
 
@@ -106,13 +111,14 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            spack
+            /dev/shm/spack
             ~/.spack
             /opt/intel
           key: spack-${{ runner.os }}-${{ env.cache_key }}-${{ hashFiles('UPP/ci/spack.yaml') }}
 
       - name: build-upp
         run: |
+          cd /dev/shm
           source spack/share/spack/setup-env.sh
           spack env activate upp-env
           spack config add "packages:all:prefer:['%intel']"
