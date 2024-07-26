@@ -41,6 +41,13 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
+
+      - name: install-intel-compilers
+        uses: NOAA-EMC/ci-install-intel-toolkit
+        with:
+          install-oneapi: false
+          install-mpi: true
+
       - name: checkout-upp  # This is for getting spack.yaml
         if: steps.cache-env.outputs.cache-hit != 'true'
         uses: actions/checkout@v2
@@ -69,8 +76,9 @@ jobs:
           spack compiler find
           sudo apt install cmake
           spack external find
-          spack add intel-oneapi-mpi
           spack config add "packages:all:prefer:'%intel'"
+          spack config add "packages:mpi:require:intel-oneapi-mpi"
+          spack config add "packages:mpi:buildable:false"
           spack concretize
           spack install --dirty --fail-fast hdf5
 
