@@ -63,7 +63,6 @@ jobs:
           path: |
             /dev/shm/spack
             ~/.spack
-            /opt/intel
           key: spack-${{ runner.os }}-${{ env.cache_key }}-${{ hashFiles('UPP/ci/spack.yaml') }}
 
       # Install dependencies using Spack
@@ -105,7 +104,6 @@ jobs:
           path: |
             /dev/shm/spack
             ~/.spack
-            /opt/intel
           key: spack-${{ runner.os }}-${{ env.cache_key }}-${{ hashFiles('UPP/ci/spack.yaml') }}
 
       - name: build-upp
