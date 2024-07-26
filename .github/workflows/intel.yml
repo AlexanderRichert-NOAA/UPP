@@ -70,6 +70,7 @@ jobs:
           sudo apt install cmake
           spack external find
           spack add intel-oneapi-mpi
+          spack config add "packages:all:prefer:'%intel'"
           spack concretize
           spack install --dirty --fail-fast hdf5
 
