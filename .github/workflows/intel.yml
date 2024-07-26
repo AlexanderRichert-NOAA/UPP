@@ -111,8 +111,7 @@ jobs:
 
       - name: build-upp
         run: |
-          cd /dev/shm
-          source spack/share/spack/setup-env.sh
+          source /dev/shm/spack/share/spack/setup-env.sh
           spack env activate upp-env
           spack config add "packages:all:prefer:['%intel']"
           export CC=mpiicc
