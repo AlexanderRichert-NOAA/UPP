@@ -81,7 +81,6 @@ jobs:
           spack config add "packages:all:prefer:'%intel'"
           spack config add "packages:mpi:require:intel-oneapi-mpi"
           spack config add "packages:mpi:buildable:false"
-          echo -e "  packages:\n    intel-oneapi-mpi:\n      externals:\n      - spec: intel-oneapi-mpi@2021.10.0\n        prefix: /opt/intel/oneapi/" >> $SPACK_ENV/spack.yaml
           spack concretize
           spack install --dirty --fail-fast
 
